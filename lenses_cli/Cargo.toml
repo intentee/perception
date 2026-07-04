@@ -1,0 +1,24 @@
+[package]
+name = "lenses_cli"
+version = "0.1.0"
+edition = "2024"
+autotests = false
+
+[[bin]]
+name = "lenses"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+clap = { workspace = true }
+command_handler = { workspace = true }
+tokio = { workspace = true }
+tokio-util = { workspace = true }
+
+[lints]
+workspace = true
+
+[[test]]
+name = "integration"
+path = "tests/main.rs"

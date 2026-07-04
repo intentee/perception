@@ -1,0 +1,17 @@
+[workspace]
+resolver = "3"
+members = [
+    "lenses_cli",
+]
+
+[workspace.dependencies]
+anyhow = "=1.0.99"
+async-trait = "=0.1.89"
+clap = { version = "=4.5.47", features = ["derive"] }
+command_handler = "=0.2.0"
+tokio = { version = "=1.49.0", features = ["full"] }
+tokio-util = "=0.7.17"
+
+[workspace.lints.clippy]
+ignored_unit_patterns = "warn"
+must_use_candidate = "warn"
