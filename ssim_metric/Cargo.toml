@@ -1,0 +1,25 @@
+[package]
+name = "ssim_metric"
+version = "0.1.0"
+edition = "2024"
+license.workspace = true
+description = "ssim-metric"
+
+[dependencies]
+imgref = { workspace = true }
+palette = { workspace = true }
+rgb = { workspace = true }
+ssim_backend = { workspace = true }
+ssim_backend_cpu = { workspace = true, optional = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+image = { workspace = true }
+ssim_metric_test = { workspace = true }
+
+[features]
+default = ["cpu"]
+cpu = ["dep:ssim_backend_cpu"]
+
+[lints]
+workspace = true

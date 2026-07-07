@@ -1,0 +1,21 @@
+Fixture image provenance
+=========================
+
+Every image in this directory is a small, center-cropped, metadata-stripped
+128x128 8-bit RGB derivative of a source photograph released under the
+Creative Commons CC0 1.0 Universal Public Domain Dedication
+(https://creativecommons.org/publicdomain/zero/1.0/). Under CC0 the works are
+dedicated to the public domain; no rights are reserved and no attribution is
+legally required. The provenance below is recorded for honesty and traceability.
+
+cat_tabby.png
+  title:    "Cat"
+  creator:  Burnt Pineapple Productions
+  source:   https://www.flickr.com/photos/51686021@N07/42700002412
+  license:  CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+
+cat_tuxedo.png
+  title:    "Black and white cat on car roof headshot 1"
+  creator:  D Coetzee
+  source:   https://www.flickr.com/photos/29507259@N02/3565624687
+  license:  CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)

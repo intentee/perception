@@ -1,0 +1,13 @@
+[package]
+name = "ssim_metric_test"
+version = "0.1.0"
+edition = "2024"
+license.workspace = true
+description = "ssim_metric test support"
+
+[dependencies]
+ndarray = { workspace = true }
+ndarray-stats = { workspace = true }
+
+[lints]
+workspace = true

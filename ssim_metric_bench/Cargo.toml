@@ -1,0 +1,12 @@
+[package]
+name = "ssim_metric_bench"
+version = "0.1.0"
+edition = "2024"
+license.workspace = true
+description = "ssim_metric benchmark support"
+
+[dependencies]
+rgb = { workspace = true }
+
+[lints]
+workspace = true
