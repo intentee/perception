@@ -1,0 +1,20 @@
+[package]
+name = "perception_backend_cuda_test"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "perception CUDA backend equivalence tests"
+publish = false
+
+[dependencies]
+perception_backend = { workspace = true }
+perception_backend_cpu = { workspace = true }
+perception_backend_cuda = { workspace = true }
+perception_metric_bench = { workspace = true }
+rgb = { workspace = true }
+
+[features]
+cuda = ["perception_backend_cuda/cuda"]
+
+[lints]
+workspace = true

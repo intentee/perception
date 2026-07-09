@@ -1,0 +1,22 @@
+[package]
+name = "perception_backend_cpu"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "CPU backend for the perception SSIM engine."
+
+[dependencies]
+image = { workspace = true }
+libblur = { workspace = true }
+palette = { workspace = true }
+perception_backend = { workspace = true }
+rayon = { workspace = true }
+rgb = { workspace = true }
+thiserror = { workspace = true }
+
+[lints]
+workspace = true

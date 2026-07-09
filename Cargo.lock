@@ -385,6 +385,131 @@ dependencies = [
 ]
 
 [[package]]
+name = "perception"
+version = "0.1.0"
+dependencies = [
+ "image",
+ "perception_backend",
+ "perception_backend_cpu",
+ "perception_backend_cuda",
+ "perception_metric",
+ "perception_test",
+ "rayon",
+ "rgb",
+ "thiserror",
+]
+
+[[package]]
+name = "perception_backend"
+version = "0.1.0"
+dependencies = [
+ "palette",
+ "rgb",
+ "thiserror",
+]
+
+[[package]]
+name = "perception_backend_cpu"
+version = "0.1.0"
+dependencies = [
+ "image",
+ "libblur",
+ "palette",
+ "perception_backend",
+ "rayon",
+ "rgb",
+ "thiserror",
+]
+
+[[package]]
+name = "perception_backend_cuda"
+version = "0.1.0"
+dependencies = [
+ "cudarc",
+ "libblur",
+ "palette",
+ "perception_backend",
+ "rgb",
+ "thiserror",
+]
+
+[[package]]
+name = "perception_backend_cuda_test"
+version = "0.1.0"
+dependencies = [
+ "perception_backend",
+ "perception_backend_cpu",
+ "perception_backend_cuda",
+ "perception_metric_bench",
+ "rgb",
+]
+
+[[package]]
+name = "perception_bench_cpu"
+version = "0.1.0"
+dependencies = [
+ "perception_metric",
+ "perception_metric_bench",
+ "perception_metric_bench_scenarios",
+]
+
+[[package]]
+name = "perception_bench_cuda"
+version = "0.1.0"
+dependencies = [
+ "perception_backend_cuda",
+ "perception_metric",
+ "perception_metric_bench",
+ "perception_metric_bench_scenarios",
+]
+
+[[package]]
+name = "perception_metric"
+version = "0.1.0"
+dependencies = [
+ "image",
+ "imgref",
+ "palette",
+ "perception_backend",
+ "perception_backend_cpu",
+ "perception_metric_test",
+ "rgb",
+ "thiserror",
+]
+
+[[package]]
+name = "perception_metric_bench"
+version = "0.1.0"
+dependencies = [
+ "rgb",
+]
+
+[[package]]
+name = "perception_metric_bench_scenarios"
+version = "0.1.0"
+dependencies = [
+ "perception_backend",
+ "perception_metric",
+ "perception_metric_bench",
+ "rgb",
+]
+
+[[package]]
+name = "perception_metric_test"
+version = "0.1.0"
+dependencies = [
+ "ndarray",
+ "ndarray-stats",
+]
+
+[[package]]
+name = "perception_test"
+version = "0.1.0"
+dependencies = [
+ "image",
+]
+
+[[package]]
 name = "png"
 version = "0.18.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -521,131 +646,6 @@ name = "simd-adler32"
 version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "703d5c7ef118737c72f1af64ad2f6f8c5e1921f818cdcb97b8fe6fc69bf66214"
-
-[[package]]
-name = "ssim"
-version = "0.1.0"
-dependencies = [
- "image",
- "rayon",
- "rgb",
- "ssim_backend",
- "ssim_backend_cpu",
- "ssim_backend_cuda",
- "ssim_metric",
- "ssim_test",
- "thiserror",
-]
-
-[[package]]
-name = "ssim_backend"
-version = "0.1.0"
-dependencies = [
- "palette",
- "rgb",
- "thiserror",
-]
-
-[[package]]
-name = "ssim_backend_cpu"
-version = "0.1.0"
-dependencies = [
- "image",
- "libblur",
- "palette",
- "rayon",
- "rgb",
- "ssim_backend",
- "thiserror",
-]
-
-[[package]]
-name = "ssim_backend_cuda"
-version = "0.1.0"
-dependencies = [
- "cudarc",
- "libblur",
- "palette",
- "rgb",
- "ssim_backend",
- "thiserror",
-]
-
-[[package]]
-name = "ssim_backend_cuda_test"
-version = "0.1.0"
-dependencies = [
- "rgb",
- "ssim_backend",
- "ssim_backend_cpu",
- "ssim_backend_cuda",
- "ssim_metric_bench",
-]
-
-[[package]]
-name = "ssim_bench_cpu"
-version = "0.1.0"
-dependencies = [
- "ssim_metric",
- "ssim_metric_bench",
- "ssim_metric_bench_scenarios",
-]
-
-[[package]]
-name = "ssim_bench_cuda"
-version = "0.1.0"
-dependencies = [
- "ssim_backend_cuda",
- "ssim_metric",
- "ssim_metric_bench",
- "ssim_metric_bench_scenarios",
-]
-
-[[package]]
-name = "ssim_metric"
-version = "0.1.0"
-dependencies = [
- "image",
- "imgref",
- "palette",
- "rgb",
- "ssim_backend",
- "ssim_backend_cpu",
- "ssim_metric_test",
- "thiserror",
-]
-
-[[package]]
-name = "ssim_metric_bench"
-version = "0.1.0"
-dependencies = [
- "rgb",
-]
-
-[[package]]
-name = "ssim_metric_bench_scenarios"
-version = "0.1.0"
-dependencies = [
- "rgb",
- "ssim_backend",
- "ssim_metric",
- "ssim_metric_bench",
-]
-
-[[package]]
-name = "ssim_metric_test"
-version = "0.1.0"
-dependencies = [
- "ndarray",
- "ndarray-stats",
-]
-
-[[package]]
-name = "ssim_test"
-version = "0.1.0"
-dependencies = [
- "image",
-]
 
 [[package]]
 name = "syn"

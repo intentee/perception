@@ -5,6 +5,6 @@ slow-timeout = { period = "20ms", terminate-after = 2 }
 cuda-serial = { max-threads = 1 }
 
 [[profile.default.overrides]]
-filter = 'package(ssim_backend_cuda) | package(ssim_backend_cuda_test)'
+filter = 'package(perception_backend_cuda) | package(perception_backend_cuda_test)'
 slow-timeout = { period = "30s", terminate-after = 2 }
 test-group = "cuda-serial"

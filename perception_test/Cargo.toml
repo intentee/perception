@@ -1,0 +1,13 @@
+[package]
+name = "perception_test"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "perception test support"
+publish = false
+
+[dependencies]
+image = { workspace = true }
+
+[lints]
+workspace = true

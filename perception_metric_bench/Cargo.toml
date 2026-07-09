@@ -1,0 +1,13 @@
+[package]
+name = "perception_metric_bench"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "perception_metric benchmark support"
+publish = false
+
+[dependencies]
+rgb = { workspace = true }
+
+[lints]
+workspace = true

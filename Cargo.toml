@@ -1,22 +1,28 @@
 [workspace]
 resolver = "3"
 members = [
-    "ssim",
-    "ssim_backend",
-    "ssim_backend_cpu",
-    "ssim_backend_cuda",
-    "ssim_backend_cuda_test",
-    "ssim_bench_cpu",
-    "ssim_bench_cuda",
-    "ssim_metric",
-    "ssim_metric_bench",
-    "ssim_metric_bench_scenarios",
-    "ssim_metric_test",
-    "ssim_test",
+    "perception",
+    "perception_backend",
+    "perception_backend_cpu",
+    "perception_backend_cuda",
+    "perception_backend_cuda_test",
+    "perception_bench_cpu",
+    "perception_bench_cuda",
+    "perception_metric",
+    "perception_metric_bench",
+    "perception_metric_bench_scenarios",
+    "perception_metric_test",
+    "perception_test",
 ]
 
 [workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
 license = "Apache-2.0"
+authors = ["Mateusz Charytoniuk <mateusz@intentee.com>"]
+repository = "https://github.com/intentee/perception"
+homepage = "https://github.com/intentee/perception"
 
 [workspace.dependencies]
 cudarc = { version = "=0.19.8", default-features = false }
@@ -28,14 +34,14 @@ ndarray-stats = "=0.7.0"
 palette = { version = "=0.7.6", default-features = false, features = ["std"] }
 rayon = "=1.12.0"
 rgb = "=0.8.53"
-ssim_backend = { path = "ssim_backend", version = "=0.1.0" }
-ssim_backend_cpu = { path = "ssim_backend_cpu", version = "=0.1.0" }
-ssim_backend_cuda = { path = "ssim_backend_cuda", version = "=0.1.0" }
-ssim_metric = { path = "ssim_metric", version = "=0.1.0" }
-ssim_metric_bench = { path = "ssim_metric_bench", version = "=0.1.0" }
-ssim_metric_bench_scenarios = { path = "ssim_metric_bench_scenarios", version = "=0.1.0" }
-ssim_metric_test = { path = "ssim_metric_test", version = "=0.1.0" }
-ssim_test = { path = "ssim_test", version = "=0.1.0" }
+perception_backend = { path = "perception_backend", version = "=0.1.0" }
+perception_backend_cpu = { path = "perception_backend_cpu", version = "=0.1.0" }
+perception_backend_cuda = { path = "perception_backend_cuda", version = "=0.1.0" }
+perception_metric = { path = "perception_metric", version = "=0.1.0" }
+perception_metric_bench = { path = "perception_metric_bench" }
+perception_metric_bench_scenarios = { path = "perception_metric_bench_scenarios" }
+perception_metric_test = { path = "perception_metric_test" }
+perception_test = { path = "perception_test" }
 thiserror = "=2.0.18"
 
 [profile.release]

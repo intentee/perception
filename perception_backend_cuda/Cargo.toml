@@ -1,0 +1,31 @@
+[package]
+name = "perception_backend_cuda"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "CUDA/GPU backend for the perception SSIM engine."
+
+[dependencies]
+cudarc = { workspace = true, optional = true }
+libblur = { workspace = true }
+palette = { workspace = true }
+perception_backend = { workspace = true }
+rgb = { workspace = true }
+thiserror = { workspace = true }
+
+[features]
+cuda = [
+    "dep:cudarc",
+    "cudarc/driver",
+    "cudarc/nvrtc",
+    "cudarc/std",
+    "cudarc/dynamic-loading",
+    "cudarc/cuda-13020",
+]
+
+[lints]
+workspace = true

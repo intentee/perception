@@ -1,0 +1,30 @@
+[package]
+name = "perception_bench_cpu"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "perception CPU benchmarks"
+publish = false
+
+[dependencies]
+perception_metric = { workspace = true }
+perception_metric_bench = { workspace = true }
+perception_metric_bench_scenarios = { workspace = true }
+
+[features]
+cpu = ["perception_metric/cpu"]
+
+[[bench]]
+name = "create_image"
+harness = false
+
+[[bench]]
+name = "compare"
+harness = false
+
+[[bench]]
+name = "pipeline"
+harness = false
+
+[lints]
+workspace = true
