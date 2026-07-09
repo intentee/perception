@@ -8,3 +8,7 @@ cuda-serial = { max-threads = 1 }
 filter = 'package(perception_backend_cuda) | package(perception_backend_cuda_test)'
 slow-timeout = { period = "30s", terminate-after = 2 }
 test-group = "cuda-serial"
+
+[[profile.default.overrides]]
+filter = 'package(perception_cli)'
+slow-timeout = { period = "1s", terminate-after = 2 }

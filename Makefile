@@ -30,8 +30,8 @@ build-cpu:
 .PHONY: build-cuda
 build-cuda:
 	cargo build --all-targets \
-		-p perception -p perception_backend_cuda -p perception_backend_cuda_test -p perception_bench_cuda \
-		--features perception/cuda,perception_backend_cuda/cuda,perception_backend_cuda_test/cuda,perception_bench_cuda/cuda
+		-p perception -p perception_backend_cuda -p perception_backend_cuda_test -p perception_bench_cuda -p perception_cli \
+		--features perception/cuda,perception_backend_cuda/cuda,perception_backend_cuda_test/cuda,perception_bench_cuda/cuda,perception_cli/cuda
 
 .PHONY: clean
 clean:
@@ -45,8 +45,8 @@ clippy-cpu:
 .PHONY: clippy-cuda
 clippy-cuda:
 	cargo clippy --all-targets \
-		-p perception -p perception_backend_cuda -p perception_backend_cuda_test -p perception_bench_cuda \
-		--features perception/cuda,perception_backend_cuda/cuda,perception_backend_cuda_test/cuda,perception_bench_cuda/cuda \
+		-p perception -p perception_backend_cuda -p perception_backend_cuda_test -p perception_bench_cuda -p perception_cli \
+		--features perception/cuda,perception_backend_cuda/cuda,perception_backend_cuda_test/cuda,perception_bench_cuda/cuda,perception_cli/cuda \
 		-- -D warnings
 
 .PHONY: coverage-cpu
@@ -60,6 +60,7 @@ coverage-cpu: node_modules
 		--workspace-root $(CURDIR) \
 		--gated perception_metric=100 \
 		--gated perception=100 \
+		--gated perception_cli=100 \
 		--gated perception_backend=100 \
 		--gated perception_backend_cpu=100 \
 		--gated perception_metric_bench=100 \

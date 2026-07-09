@@ -8,6 +8,7 @@ members = [
     "perception_backend_cuda_test",
     "perception_bench_cpu",
     "perception_bench_cuda",
+    "perception_cli",
     "perception_metric",
     "perception_metric_bench",
     "perception_metric_bench_scenarios",
@@ -25,6 +26,8 @@ repository = "https://github.com/intentee/perception"
 homepage = "https://github.com/intentee/perception"
 
 [workspace.dependencies]
+anyhow = "=1.0.99"
+clap = { version = "=4.5.47", features = ["derive"] }
 cudarc = { version = "=0.19.8", default-features = false }
 image = { version = "=0.25.10", default-features = false, features = ["bmp", "png", "jpeg", "webp"] }
 imgref = "=1.12.2"
@@ -34,6 +37,7 @@ ndarray-stats = "=0.7.0"
 palette = { version = "=0.7.6", default-features = false, features = ["std"] }
 rayon = "=1.12.0"
 rgb = "=0.8.53"
+perception = { path = "perception", version = "=0.1.0" }
 perception_backend = { path = "perception_backend", version = "=0.1.0" }
 perception_backend_cpu = { path = "perception_backend_cpu", version = "=0.1.0" }
 perception_backend_cuda = { path = "perception_backend_cuda", version = "=0.1.0" }
