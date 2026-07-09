@@ -1,13 +1,20 @@
 mod compare_paths;
 mod comparison;
 mod decoded_image;
+mod diff_output_paths;
+mod diff_paths;
+mod dissimilarity_threshold;
 mod engine;
 mod image_pair;
 mod similarity_error;
 mod similarity_map;
+mod three_way_diff;
 
 pub use crate::comparison::Comparison;
+pub use crate::diff_output_paths::DiffOutputPaths;
+pub use crate::dissimilarity_threshold::DissimilarityThreshold;
 pub use crate::engine::Engine;
 pub use crate::image_pair::ImagePair;
 pub use crate::similarity_error::SimilarityError;
 pub use crate::similarity_map::SimilarityMap;
+pub use crate::three_way_diff::ThreeWayDiff;

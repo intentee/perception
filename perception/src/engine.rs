@@ -4,7 +4,9 @@ use perception_metric::Ssim;
 
 use crate::compare_paths::compare_paths;
 use crate::comparison::Comparison;
+use crate::diff_paths::diff_paths;
 use crate::similarity_error::SimilarityError;
+use crate::three_way_diff::ThreeWayDiff;
 
 const SAVED_MAP_SCALES: u8 = 1;
 
@@ -45,6 +47,15 @@ impl Engine {
             Self::Cuda(engine) => compare_paths(engine, original, distorted),
         }
     }
+
+    pub fn diff(&self, original: &Path, distorted: &Path) -> Result<ThreeWayDiff, SimilarityError> {
+        match self {
+            #[cfg(feature = "cpu")]
+            Self::Cpu(engine) => diff_paths(engine, original, distorted),
+            #[cfg(feature = "cuda")]
+            Self::Cuda(engine) => diff_paths(engine, original, distorted),
+        }
+    }
 }
 
 #[cfg(all(test, feature = "cpu"))]
@@ -53,6 +64,8 @@ mod tests {
     use perception_test::write_test_image;
 
     use super::Engine;
+    use crate::diff_output_paths::DiffOutputPaths;
+    use crate::dissimilarity_threshold::DissimilarityThreshold;
 
     #[test]
     fn the_cpu_engine_scores_identical_images_as_fully_similar() {
@@ -93,5 +106,28 @@ mod tests {
         let result = Engine::cpu().compare(&scratch.path("missing.png"), &distorted);
 
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn the_cpu_engine_produces_a_three_way_diff() {
+        let scratch = Scratch::new("engine_cpu_diff");
+        let original = scratch.path("original.png");
+        let distorted = scratch.path("distorted.png");
+        let expected = scratch.path("expected.png");
+        let current = scratch.path("current.png");
+        let diff = scratch.path("diff.png");
+        write_test_image(&original, 12, 0);
+        write_test_image(&distorted, 12, 40);
+
+        Engine::cpu()
+            .diff(&original, &distorted)
+            .unwrap()
+            .write(
+                DissimilarityThreshold::new(0.6).unwrap(),
+                &DiffOutputPaths::new(&expected, &current, &diff),
+            )
+            .unwrap();
+
+        assert!(expected.exists() && current.exists() && diff.exists());
     }
 }

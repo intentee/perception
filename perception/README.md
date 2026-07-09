@@ -92,6 +92,41 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
+## Three-way diff
+
+For a pixelmatch-style visual report, `ImagePair::diff` writes three separate PNG files — the
+expected image, the current image, and a diff panel that paints red every pixel whose dissimilarity
+is at or above a configurable threshold, over a faded grayscale of the expected image:
+
+```rust
+use std::path::Path;
+
+use perception::DiffOutputPaths;
+use perception::DissimilarityThreshold;
+use perception::ImagePair;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    ImagePair::new(
+        Path::new("original.png"),
+        Path::new("distorted.png"),
+    )
+    .diff()?
+    .write(
+        // Highlight every region at or above 80% dissimilarity.
+        DissimilarityThreshold::new(0.8)?,
+        &DiffOutputPaths::new(
+            Path::new("expected.png"),
+            Path::new("current.png"),
+            Path::new("diff.png"),
+        ),
+    )?;
+    Ok(())
+}
+```
+
+Each of the three output paths is configured independently. `Engine::diff` produces the same
+`ThreeWayDiff` on an explicitly chosen backend.
+
 ## Workspace layout
 
 `perception` is a thin facade over a small family of crates:

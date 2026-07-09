@@ -4,7 +4,9 @@ use perception_metric::Ssim;
 
 use crate::compare_paths::compare_paths;
 use crate::comparison::Comparison;
+use crate::diff_paths::diff_paths;
 use crate::similarity_error::SimilarityError;
+use crate::three_way_diff::ThreeWayDiff;
 
 pub struct ImagePair<'paths> {
     original: &'paths Path,
@@ -28,6 +30,16 @@ impl<'paths> ImagePair<'paths> {
         let engine = Ssim::new().with_saved_map_scales(1);
 
         compare_paths(&engine, original, distorted)
+    }
+
+    pub fn diff(self) -> Result<ThreeWayDiff, SimilarityError> {
+        let Self {
+            original,
+            distorted,
+        } = self;
+        let engine = Ssim::new().with_saved_map_scales(1);
+
+        diff_paths(&engine, original, distorted)
     }
 }
 
@@ -99,6 +111,41 @@ mod tests {
         write_test_image(&distorted, 8, 0);
 
         let result = ImagePair::new(&original, &distorted).compare();
+
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn a_missing_original_makes_diff_an_error() {
+        let scratch = Scratch::new("diff_missing_original");
+        let distorted = scratch.path("distorted.png");
+        write_test_image(&distorted, 12, 0);
+
+        let result = ImagePair::new(&scratch.path("missing.png"), &distorted).diff();
+
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn a_missing_distorted_makes_diff_an_error() {
+        let scratch = Scratch::new("diff_missing_distorted");
+        let original = scratch.path("original.png");
+        write_test_image(&original, 12, 0);
+
+        let result = ImagePair::new(&original, &scratch.path("missing.png")).diff();
+
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn a_dimension_mismatch_makes_diff_an_error() {
+        let scratch = Scratch::new("diff_mismatch");
+        let original = scratch.path("original.png");
+        let distorted = scratch.path("distorted.png");
+        write_test_image(&original, 12, 0);
+        write_test_image(&distorted, 8, 0);
+
+        let result = ImagePair::new(&original, &distorted).diff();
 
         assert!(result.is_err());
     }

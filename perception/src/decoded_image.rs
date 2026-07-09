@@ -78,6 +78,69 @@ impl DecodedImage {
         })
     }
 
+    pub(crate) fn into_dynamic_image(self) -> Result<image::DynamicImage, SimilarityError> {
+        Ok(match self {
+            Self::Rgb { width, height, raw } => {
+                let sample_count = raw.len();
+
+                image::DynamicImage::ImageRgb8(
+                    image::RgbImage::from_raw(width as u32, height as u32, raw).ok_or(
+                        SimilarityError::InconsistentSourceImage {
+                            width,
+                            height,
+                            sample_count,
+                        },
+                    )?,
+                )
+            }
+            Self::Rgb16 { width, height, raw } => {
+                let sample_count = raw.len();
+
+                image::DynamicImage::ImageRgb16(
+                    image::ImageBuffer::<image::Rgb<u16>, Vec<u16>>::from_raw(
+                        width as u32,
+                        height as u32,
+                        raw,
+                    )
+                    .ok_or(SimilarityError::InconsistentSourceImage {
+                        width,
+                        height,
+                        sample_count,
+                    })?,
+                )
+            }
+            Self::Rgba { width, height, raw } => {
+                let sample_count = raw.len();
+
+                image::DynamicImage::ImageRgba8(
+                    image::RgbaImage::from_raw(width as u32, height as u32, raw).ok_or(
+                        SimilarityError::InconsistentSourceImage {
+                            width,
+                            height,
+                            sample_count,
+                        },
+                    )?,
+                )
+            }
+            Self::Rgba16 { width, height, raw } => {
+                let sample_count = raw.len();
+
+                image::DynamicImage::ImageRgba16(
+                    image::ImageBuffer::<image::Rgba<u16>, Vec<u16>>::from_raw(
+                        width as u32,
+                        height as u32,
+                        raw,
+                    )
+                    .ok_or(SimilarityError::InconsistentSourceImage {
+                        width,
+                        height,
+                        sample_count,
+                    })?,
+                )
+            }
+        })
+    }
+
     pub(crate) fn to_ssim_image<Strategy>(
         &self,
         context: &Ssim<Strategy>,
@@ -106,6 +169,7 @@ impl DecodedImage {
 mod tests {
     use std::path::Path;
 
+    use image::ColorType;
     use image::GrayImage;
     use image::ImageBuffer;
     use image::Luma;
@@ -232,5 +296,101 @@ mod tests {
         };
 
         assert!(inconsistent.to_ssim_image(&Ssim::new()).is_err());
+    }
+
+    #[test]
+    fn an_rgb_source_becomes_an_eight_bit_dynamic_image() {
+        let dynamic = DecodedImage::Rgb {
+            width: 1,
+            height: 1,
+            raw: vec![10, 120, 240],
+        }
+        .into_dynamic_image()
+        .unwrap();
+
+        assert_eq!(dynamic.color(), ColorType::Rgb8);
+    }
+
+    #[test]
+    fn an_rgba_source_becomes_an_eight_bit_dynamic_image() {
+        let dynamic = DecodedImage::Rgba {
+            width: 1,
+            height: 1,
+            raw: vec![10, 120, 240, 128],
+        }
+        .into_dynamic_image()
+        .unwrap();
+
+        assert_eq!(dynamic.color(), ColorType::Rgba8);
+    }
+
+    #[test]
+    fn an_rgb16_source_keeps_its_sixteen_bit_depth() {
+        let dynamic = DecodedImage::Rgb16 {
+            width: 1,
+            height: 1,
+            raw: vec![65535, 0, 0],
+        }
+        .into_dynamic_image()
+        .unwrap();
+
+        assert_eq!(dynamic.color(), ColorType::Rgb16);
+    }
+
+    #[test]
+    fn an_rgba16_source_keeps_its_sixteen_bit_depth() {
+        let dynamic = DecodedImage::Rgba16 {
+            width: 1,
+            height: 1,
+            raw: vec![0, 0, 0, 20000],
+        }
+        .into_dynamic_image()
+        .unwrap();
+
+        assert_eq!(dynamic.color(), ColorType::Rgba16);
+    }
+
+    #[test]
+    fn an_rgb_buffer_that_contradicts_its_dimensions_has_no_dynamic_image() {
+        let inconsistent = DecodedImage::Rgb {
+            width: 2,
+            height: 2,
+            raw: vec![0u8; 3],
+        };
+
+        assert!(inconsistent.into_dynamic_image().is_err());
+    }
+
+    #[test]
+    fn an_rgb16_buffer_that_contradicts_its_dimensions_has_no_dynamic_image() {
+        let inconsistent = DecodedImage::Rgb16 {
+            width: 2,
+            height: 2,
+            raw: vec![0u16; 3],
+        };
+
+        assert!(inconsistent.into_dynamic_image().is_err());
+    }
+
+    #[test]
+    fn an_rgba_buffer_that_contradicts_its_dimensions_has_no_dynamic_image() {
+        let inconsistent = DecodedImage::Rgba {
+            width: 2,
+            height: 2,
+            raw: vec![0u8; 4],
+        };
+
+        assert!(inconsistent.into_dynamic_image().is_err());
+    }
+
+    #[test]
+    fn an_rgba16_buffer_that_contradicts_its_dimensions_has_no_dynamic_image() {
+        let inconsistent = DecodedImage::Rgba16 {
+            width: 2,
+            height: 2,
+            raw: vec![0u16; 4],
+        };
+
+        assert!(inconsistent.into_dynamic_image().is_err());
     }
 }
